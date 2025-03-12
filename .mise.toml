@@ -1,0 +1,11 @@
+min_version = "2024.9.5"
+
+[env]
+# Use the project name derived from the current directory
+PROJECT_NAME = "{{ config_root | basename }}"
+
+[tools]
+python = '3.13.2'
+
+[settings]
+python.uv_venv_auto = true
