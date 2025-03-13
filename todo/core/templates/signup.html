@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div class="row">
+        <div class="col-6 offset-3">
+            <div class="card my-4">
+                <div class="card-header text-center">
+                    <h1>
+                        <i class="bi bi-person-circle"></i>
+                        Create your account
+                    </h1>
+                </div>
+
+                {# possible errors #}
+                {% if form.errors %}
+                    <div class="card-body">
+                        <ul class="list-group">
+                            {% for field, errors in form.errors.items %}
+                                {% for error in errors %}
+                                    <li class="list-group-item list-group-item-danger">{{error}}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
+                {# login form #}
+                <form method="POST">
+                    {% csrf_token %}
+
+                    {% for field in form %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ field.label }}</h5>
+                            <div class="card-text">{{ field }}</div>
+                        </div>
+                    {% endfor %}
+
+                    <div class="card-body">
+                        <div class="d-grid gap-2 col-10 mx-auto">
+                            <input type="submit" class="btn btn-block btn-primary" value="Sign up">
+                        </div>
+                    </div>
+                </form>
+
+                <div class="text-center pb-3">
+                    <a href="{% url 'core:login' %}">Already have an account? Click here to log in!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
