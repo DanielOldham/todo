@@ -7,5 +7,6 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('logout/', views.logout_user, name='logout'),
     path('', views.todo_list, name='todo_list'),
+    path('todo/add', views.new_todo_form, name='new_todo_form'),
     path('todo/status/<int:todo_id>', views.change_todo_status, name='change_todo_status'),
 ]

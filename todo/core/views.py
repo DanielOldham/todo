@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from django.shortcuts import render, redirect
-from .forms import SignupForm, LoginForm
+from .forms import SignupForm, LoginForm, TodoForm
 from django.contrib import auth
 from .models import Todo
 
@@ -103,3 +103,20 @@ def change_todo_status(request, todo_id):
     todo.status = 'C' if todo.status == 'P' else 'P'
     todo.save()
     return redirect('core:todo_list')
+
+
+@login_required
+def new_todo_form(request):
+    if request.method == 'GET':
+        context = {'form': TodoForm(), 'form_type': 'add'}
+        return render(request, 'todo_form.html', context)
+    if request.method == 'POST':
+        form = TodoForm(data=request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            return redirect('core:todo_list')
+        else:
+            # FIXME: send error message to todo list page
+            return redirect('core:todo_list')
