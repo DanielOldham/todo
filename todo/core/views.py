@@ -1,7 +1,9 @@
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from django.shortcuts import render, redirect
 from .forms import SignupForm, LoginForm
 from django.contrib import auth
+from .models import Todo
 
 
 def login(request):
@@ -72,4 +74,32 @@ def logout_user(request):
 
 @login_required
 def todo_list(request):
-    return render(request, 'todo_list.html')
+    """
+    Django view.
+    Display the Todo List.
+    """
+    todos = Todo.objects.filter(user=request.user)
+
+    return render(request, 'todo_list.html', context={'todos': todos})
+
+@login_required
+def change_todo_status(request, todo_id):
+    """
+    Django view.
+    Swap the status of the given Todo object.
+    """
+
+    # error handling
+    try:
+        todo = Todo.objects.get(id=todo_id)
+
+        # if the todo doesn't belong to that user, raise exception
+        if todo.user != request.user:
+            raise PermissionDenied
+    except (PermissionDenied, ObjectDoesNotExist):
+        return redirect('core:todo_list')
+
+    # flip status
+    todo.status = 'C' if todo.status == 'P' else 'P'
+    todo.save()
+    return redirect('core:todo_list')

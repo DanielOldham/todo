@@ -17,13 +17,12 @@
 <style>
         {# variables #}
         :root {
-            --primary-orange: #e39e36;
-            --primary-orange-dark: #d78d1d;
-            --primary-orange-darker: #9d6715;
+            --primary-beige: #FFF09E;
+            --primary-beige-dark: #d78d1d;
+            --primary-beige-darker: #9d6715;
 
-            --nav-grey: #080c12;
-
-            --background-blue: #122542;
+            --primary-green: #00513A;
+            --primary-green-darker: #002118;
 
             --btn-blue: #264f8c;
         }
@@ -31,81 +30,93 @@
 
         {# body styles #}
         body {
-            background-color: var(--background-blue);
+            background-color: var(--primary-green);
         }
 
 
         {# nav styles #}
         nav#main {
-            background-color: var(--nav-grey);
-            border-bottom: var(--primary-orange) solid 1px;
+            background-color: var(--primary-green-darker);
+            border-bottom: var(--primary-beige) solid 1px;
         }
         .navbar-brand {
-            color: var(--primary-orange);
+            color: var(--primary-beige);
         }
         .navbar-brand:hover {
-            color: var(--primary-orange) !important;
+            color: var(--primary-beige) !important;
         }
 
 
         {# card styles #}
         .card-header {
-            background-color: var(--nav-grey);
-            color: var(--primary-orange);
+            background-color: var(--primary-green-darker);
+            color: var(--primary-beige);
         }
         .card {
-            border-color: var(--background-blue);
+            border-color: var(--primary-green);
+        }
+
+
+        {# text styles #}
+        .text-muted {
+            color: lightgray;
+        }
+        .primary-color {
+            color: var(--primary-green)
+        }
+        .primary-color-darker {
+            color: var(--primary-green-darker)
+        }
+        a.primary-color:hover {
+            color: var(--primary-green-darker)
         }
 
 
         {# button styles #}
         .btn-primary {
-            background-color: var(--background-blue);
-            border-color: var(--background-blue);
+            background-color: var(--primary-green);
+            border-color: var(--primary-green);
         }
         .btn-primary:hover {
-            background-color: var(--nav-grey) !important;
-            border-color: var(--nav-grey) !important;
+            background-color: var(--primary-green-darker) !important;
+            border-color: var(--primary-green-darker) !important;
         }
         .btn-primary.show {
-            background-color: var(--nav-grey) !important;
-            border-color: var(--nav-grey) !important;
+            background-color: var(--primary-green-darker) !important;
+            border-color: var(--primary-green-darker) !important;
         }
-
         .btn-orange {
-            background-color: var(--primary-orange);
-            border-color: var(--primary-orange);
+            background-color: var(--primary-beige);
+            border-color: var(--primary-beige);
             color: white;
         }
-
         .btn-orange:hover {
-            background-color: var(--primary-orange-dark) !important;
-            border-color: var(--primary-orange-dark) !important;
+            background-color: var(--primary-beige-dark) !important;
+            border-color: var(--primary-beige-dark) !important;
             color: white !important;
         }
-
         .btn-orange.disabled {
-            background-color: var(--primary-orange-darker);
-            border-color: var(--primary-orange-darker);
+            background-color: var(--primary-beige-darker);
+            border-color: var(--primary-beige-darker);
             color: #e6e6e6;
         }
 
 
         {# accordion styles #}
         .accordion-item.search-accordion {
-            border-left: solid 1px var(--nav-grey) !important;
-            border-right: solid 1px var(--nav-grey) !important;
-            border-top: solid 1px var(--primary-orange) !important;
+            border-left: solid 1px var(--primary-green-darker) !important;
+            border-right: solid 1px var(--primary-green-darker) !important;
+            border-top: solid 1px var(--primary-beige) !important;
         }
 
         .accordion-button {
-            background-color: var(--nav-grey) !important;
+            background-color: var(--primary-green-darker) !important;
             color: white !important;
             font-size: 0.7em;
         }
 
         .accordion-button.collapsed {
-            color: var(--primary-orange) !important;
+            color: var(--primary-beige) !important;
         }
 
         .accordion {
@@ -115,17 +126,17 @@
 
         {# pagination styles #}
         .page-link {
-            color: var(--primary-orange);
+            color: var(--primary-beige);
         }
 
         .page-item.active .page-link {
-            background-color: var(--primary-orange) !important;
+            background-color: var(--primary-beige) !important;
             color: white !important;
-            border-color: var(--primary-orange) !important;
+            border-color: var(--primary-beige) !important;
         }
 
         .page-link:hover {
-            color: var(--primary-orange-darker) !important;
+            color: var(--primary-beige-darker) !important;
         }
 
     </style>

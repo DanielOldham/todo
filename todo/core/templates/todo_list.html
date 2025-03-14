@@ -8,11 +8,53 @@
                 </h2>
 
                 <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        {% for todo in todos %}
+                        <li class="list-group-item">
+                            <div class="row {% if todo.status == 'C' %} text-decoration-line-through{% endif %}">
+                                {# todo checkbox #}
+                                <div class="col-1">
+                                    <a href="{% url 'core:change_todo_status' todo.id %}">
+                                        {% if todo.status == 'C' %}
+                                        <i class="bi bi-check-square primary-color"></i>
+                                        {% else %}
+                                        <i class="bi bi-square primary-color"></i>
+                                        {% endif %}
+                                    </a>
+                                </div>
 
-                </div>
-                <div class="card-footer" style="background-color: gray; color: orange;">
-                    <h4>
-                    </h4>
+                                {# todo title #}
+                                <div class="col-4 fw-bold text-truncate">
+                                    {{ todo.title }}
+                                </div>
+
+                                {# todo notes #}
+                                <div class="col-6 text-truncate fst-italic">
+                                    {{ todo.notes }}
+                                </div>
+
+                                {# edit todo button #}
+                                <div class="col-1">
+                                    <a href="#">
+                                        <i class="bi bi-pencil-square primary-color"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-1">
+                                    <a href="#">
+                                        <i class="bi bi-plus-square-fill primary-color"></i>
+                                    </a>
+                                </div>
+                                <div class="col-11 text-muted">
+                                    Add new Todo!
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
