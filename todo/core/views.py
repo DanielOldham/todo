@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .forms import SignupForm, LoginForm
 from django.contrib import auth
@@ -24,7 +25,7 @@ def login(request):
             user = auth.authenticate(username=username, password=password)
             if user is not None:
                 auth.login(request, user)
-                return redirect('')
+                return redirect('core:todo_list')
         else:
             # errors logging in
             return render(request, 'login.html', {'form': form})
@@ -51,7 +52,24 @@ def signup(request):
             user = auth.authenticate(username=username, password=password)
             if user is not None:
                 auth.login(request, user)
-                return redirect('')
+                return redirect('core:todo_list')
         else:
             # user is not created
             return render(request, 'signup.html', {'form': form})
+
+
+def logout_user(request):
+    """
+    Django view.
+    Logout the current user.
+
+    :param request: Django request
+    :return: redirect to login
+    """
+
+    auth.logout(request)
+    return redirect('core:login')
+
+@login_required
+def todo_list(request):
+    return render(request, 'todo_list.html')

@@ -6,11 +6,129 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Backyard Builder</title>
+    <title>Todo</title>
     {#  Bootstrap 5  #}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 </head>
+
+{# styles #}
+{# FIXME: move these to a static file later #}
+<style>
+        {# variables #}
+        :root {
+            --primary-orange: #e39e36;
+            --primary-orange-dark: #d78d1d;
+            --primary-orange-darker: #9d6715;
+
+            --nav-grey: #080c12;
+
+            --background-blue: #122542;
+
+            --btn-blue: #264f8c;
+        }
+
+
+        {# body styles #}
+        body {
+            background-color: var(--background-blue);
+        }
+
+
+        {# nav styles #}
+        nav#main {
+            background-color: var(--nav-grey);
+            border-bottom: var(--primary-orange) solid 1px;
+        }
+        .navbar-brand {
+            color: var(--primary-orange);
+        }
+        .navbar-brand:hover {
+            color: var(--primary-orange) !important;
+        }
+
+
+        {# card styles #}
+        .card-header {
+            background-color: var(--nav-grey);
+            color: var(--primary-orange);
+        }
+        .card {
+            border-color: var(--background-blue);
+        }
+
+
+        {# button styles #}
+        .btn-primary {
+            background-color: var(--background-blue);
+            border-color: var(--background-blue);
+        }
+        .btn-primary:hover {
+            background-color: var(--nav-grey) !important;
+            border-color: var(--nav-grey) !important;
+        }
+        .btn-primary.show {
+            background-color: var(--nav-grey) !important;
+            border-color: var(--nav-grey) !important;
+        }
+
+        .btn-orange {
+            background-color: var(--primary-orange);
+            border-color: var(--primary-orange);
+            color: white;
+        }
+
+        .btn-orange:hover {
+            background-color: var(--primary-orange-dark) !important;
+            border-color: var(--primary-orange-dark) !important;
+            color: white !important;
+        }
+
+        .btn-orange.disabled {
+            background-color: var(--primary-orange-darker);
+            border-color: var(--primary-orange-darker);
+            color: #e6e6e6;
+        }
+
+
+        {# accordion styles #}
+        .accordion-item.search-accordion {
+            border-left: solid 1px var(--nav-grey) !important;
+            border-right: solid 1px var(--nav-grey) !important;
+            border-top: solid 1px var(--primary-orange) !important;
+        }
+
+        .accordion-button {
+            background-color: var(--nav-grey) !important;
+            color: white !important;
+            font-size: 0.7em;
+        }
+
+        .accordion-button.collapsed {
+            color: var(--primary-orange) !important;
+        }
+
+        .accordion {
+            --bs-accordion-btn-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23e39e36'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+            --bs-accordion-btn-active-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+        }
+
+        {# pagination styles #}
+        .page-link {
+            color: var(--primary-orange);
+        }
+
+        .page-item.active .page-link {
+            background-color: var(--primary-orange) !important;
+            color: white !important;
+            border-color: var(--primary-orange) !important;
+        }
+
+        .page-link:hover {
+            color: var(--primary-orange-darker) !important;
+        }
+
+    </style>
 <body>
 
 {% block outer_body %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div class="row">
+        <div class="col-6 offset-3 my-4">
+            <div class="card bg-">
+                <h2 class="card-header">
+                    <span style="color: white !important;">Welcome, </span>{{ request.user.username }}<span style="color: white !important;">!</span>
+                </h2>
+
+                <div class="card-body">
+
+                </div>
+                <div class="card-footer" style="background-color: gray; color: orange;">
+                    <h4>
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
