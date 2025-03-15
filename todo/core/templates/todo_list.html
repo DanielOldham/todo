@@ -1,14 +1,62 @@
 {% extends 'base.html' %}
 {% block body %}
     <div class="row">
-        <div class="col-6 offset-3 my-4">
-            <div class="card bg-">
-                <h2 class="card-header">
+        <div class="col-3 offset-1 my-4">
+            <div class="card">
+                <h3 class="card-header text-center">
+                    Filter by
+                </h3>
+
+                <div class="card-body">
+                    <form action="" method="GET">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <div class="d-flex justify-content-center">
+                                    <input type="text" name="keyword" id="keyword" class="form-control" placeholder="keyword">
+                                    <label for="keyword" hidden>keyword</label>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="d-flex justify-content-center">
+                                    <input type="radio" class="btn-check" name="filter-options" value="all" id="all" autocomplete="off" checked>
+                                    <label class="btn" for="all">All</label>
+                                </div>
+                            </li>
+                            <li class="list-group-item justify-content-center">
+                                <div class="d-flex justify-content-center">
+                                    <input type="radio" class="btn-check" name="filter-options" value="pending" id="pending" autocomplete="off">
+                                    <label class="btn" for="pending">Pending</label>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="d-flex justify-content-center">
+                                    <input type="radio" class="btn-check" name="filter-options" value="completed" id="completed" autocomplete="off">
+                                    <label class="btn" for="completed">Completed</label>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="d-flex justify-content-center">
+                                    <input type="submit" class="btn btn-block btn-primary" value="Go">
+                                </div>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-7 ml-8 my-4">
+            <div class="card">
+                <h3 class="card-header text-center">
                     <span style="color: white !important;"></span>{{ request.user.first_name }}<span style="color: white !important;">'s To-do List</span>
-                </h2>
+                </h3>
 
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
+                        {% if filter_text %}
+                        <li class="list-group-item text-muted fst-italic">
+                            filtered by {{ filter_text }}
+                        </li>
+                        {% endif %}
                         {% for todo in todos %}
                         <li class="list-group-item">
                             <div class="row {% if todo.status == 'C' %} text-decoration-line-through{% endif %}">

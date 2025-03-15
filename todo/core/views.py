@@ -81,8 +81,35 @@ def todo_list(request):
     :param request: Django request
     """
     todos = Todo.objects.filter(user=request.user)
+    radio_input = request.GET.get('filter-options')
 
-    return render(request, 'todo_list.html', context={'todos': todos})
+    # if radio_input, filter by pending or completed todos
+    if radio_input:
+        if radio_input == 'pending':
+            todos = todos.filter(status='P')
+        elif radio_input == 'completed':
+            todos = todos.filter(status='C')
+
+    # if there is keyword input, search for
+    keyword_input = request.GET.get('keyword')
+    if keyword_input:
+        todos = todos.filter(notes__icontains=keyword_input).union(todos.filter(title__icontains=keyword_input))
+
+
+    context = {'todos': todos}
+
+    # create a filter message to display to the user
+    filter_text = ''
+    if radio_input != 'all' and keyword_input:
+        filter_text = radio_input + ', \"' + keyword_input + '\"'
+    elif radio_input != 'all':
+        filter_text = radio_input
+    elif keyword_input:
+        filter_text = '\"' + keyword_input + '\"'
+
+    context['filter_text'] = filter_text
+
+    return render(request, 'todo_list.html', context=context)
 
 
 @login_required
