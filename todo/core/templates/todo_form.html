@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div class="row">
+        <div class="col-6 offset-3">
+            <div class="card my-4">
+                <div class="card-header text-center">
+                    <h1>
+                        <i class="bi bi-check2-square"></i>
+                        {% if form_type == 'add' %}
+                        Add New Todo
+                        {% else %}
+                        Edit Todo
+                        {% endif %}
+                    </h1>
+                </div>
+
+                {# possible errors #}
+                {% if form.errors %}
+                    <div class="card-body">
+                        <ul class="list-group">
+                            {% for field, errors in form.errors.items %}
+                                {% for error in errors %}
+                                    <li class="list-group-item list-group-item-danger">{{error}}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
+                {# todo form #}
+                <form method="POST">
+                    {% csrf_token %}
+
+                    {% for field in form %}
+                        <div class="card-body d-grid gap-2 col-10 mx-auto">
+                            <h5 class="card-title">{{ field.label }}</h5>
+                            <div class="card-text">{{ field }}</div>
+                        </div>
+                    {% endfor %}
+
+                    <div class="card-footer mt-4">
+                        <div class="row">
+                            <div class="col-4 {% if form_type == 'add' %}offset-2{% endif %} text-center">
+                                <a class="btn btn-block btn-primary" href="{% url 'core:todo_list' %}">
+                                    <i class="bi bi-arrow-return-left"></i>
+                                    Cancel
+                                </a>
+                            </div>
+                            <div class="col-4 text-center">
+                                <input type="submit" class="btn btn-block btn-primary" value="Submit">
+                            </div>
+                            {% if form_type == 'edit' %}
+                                <div class="col-4 text-center">
+                                    <a class="btn btn-block btn-danger" href="{% url 'core:delete_todo' form.instance.id %}">
+                                        Delete
+                                        <i class="bi bi-trash3"></i>
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

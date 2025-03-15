@@ -6,7 +6,7 @@
                 <div class="card-header text-center">
                     <h1>
                         <i class="bi bi-door-open"></i>
-                        Log in to access your plans!
+                        Log in to access your Todos!
                     </h1>
                 </div>
 
@@ -28,14 +28,14 @@
                     {% csrf_token %}
 
                     {% for field in form %}
-                        <div class="card-body">
+                        <div class="card-body d-grid gap-2 col-10 mx-auto">
                             <h5 class="card-title">{{ field.label }}</h5>
                             <div class="card-text">{{ field }}</div>
                         </div>
                     {% endfor %}
 
                     <div class="card-body">
-                        <div class="d-grid gap-2 col-10 mx-auto">
+                        <div class="d-grid gap-6 col-6 mx-auto">
                             <input type="submit" class="btn btn-block btn-primary" value="Login">
                         </div>
                     </div>
