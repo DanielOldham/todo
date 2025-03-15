@@ -63,10 +63,10 @@ def signup(request):
 def logout_user(request):
     """
     Django view.
-    Logout the current user.
+    Log out the current user.
 
     :param request: Django request
-    :return: redirect to login
+    :return: redirect to login page
     """
 
     auth.logout(request)
@@ -77,16 +77,22 @@ def todo_list(request):
     """
     Django view.
     Display the Todo List.
+
+    :param request: Django request
     """
     todos = Todo.objects.filter(user=request.user)
 
     return render(request, 'todo_list.html', context={'todos': todos})
+
 
 @login_required
 def change_todo_status(request, todo_id):
     """
     Django view.
     Swap the status of the given Todo object.
+
+    :param request: Django request
+    :todo_id: id of the Todo to update
     """
 
     # error handling
@@ -107,6 +113,12 @@ def change_todo_status(request, todo_id):
 
 @login_required
 def new_todo_form(request):
+    """
+    Django view.
+    Display new Todo form and handle creation of new Todo.
+
+    :param request: Django request
+    """
     if request.method == 'GET':
         context = {'form': TodoForm(), 'form_type': 'add'}
         return render(request, 'todo_form.html', context)
@@ -120,3 +132,59 @@ def new_todo_form(request):
         else:
             # FIXME: send error message to todo list page
             return redirect('core:todo_list')
+
+
+@login_required
+def edit_todo_form(request, todo_id):
+    """
+    Django view.
+    Display edit Todo form and handle editing of existing Todo objects.
+
+    :param request: Django request
+    :todo_id: id of the Todo to update
+    """
+    try:
+        todo = Todo.objects.get(id=todo_id)
+
+        # if the todo doesn't belong to that user, raise exception
+        if todo.user != request.user:
+            raise PermissionDenied
+
+    except (ObjectDoesNotExist, PermissionDenied):
+        return redirect('core:todo_list')
+
+    if request.method == 'GET':
+        context = {'form': TodoForm(instance=todo), 'form_type': 'edit'}
+        return render(request, 'todo_form.html', context)
+
+    if request.method == 'POST':
+        form = TodoForm(data=request.POST, instance=todo)
+        if form.is_valid():
+            form.save()
+        # FIXME: send error message to todo list page if form not valid
+
+        return redirect('core:todo_list')
+
+
+@login_required
+def delete_todo(request, todo_id):
+    """
+    Django view.
+    Delete a Todo object.
+
+    :param request: Django request
+    :todo_id: id of the Todo to delete
+    """
+
+    try:
+        todo = Todo.objects.get(id=todo_id)
+
+        # if the todo doesn't belong to that user, raise exception
+        if todo.user != request.user:
+            raise PermissionDenied
+
+    except (ObjectDoesNotExist, PermissionDenied):
+        return redirect('core:todo_list')
+
+    todo.delete()
+    return redirect('core:todo_list')

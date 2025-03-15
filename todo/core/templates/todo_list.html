@@ -4,7 +4,7 @@
         <div class="col-6 offset-3 my-4">
             <div class="card bg-">
                 <h2 class="card-header">
-                    <span style="color: white !important;">Welcome, </span>{{ request.user.username }}<span style="color: white !important;">!</span>
+                    <span style="color: white !important;"></span>{{ request.user.first_name }}<span style="color: white !important;">'s To-do List</span>
                 </h2>
 
                 <div class="card-body">
@@ -35,7 +35,7 @@
 
                                 {# edit todo button #}
                                 <div class="col-1">
-                                    <a href="#">
+                                    <a href="{% url 'core:edit_todo_form' todo.id %}">
                                         <i class="bi bi-pencil-square primary-color"></i>
                                     </a>
                                 </div>
@@ -50,7 +50,7 @@
                                     </a>
                                 </div>
                                 <div class="col-11 text-muted">
-                                    Add new Todo!
+                                    Add new To-do!
                                 </div>
                             </div>
                         </li>
