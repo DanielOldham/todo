@@ -10,7 +10,7 @@ wheels/
 .venv
 
 # dotenv
-todo/.env
+todo/.env*
 
 # JetBrains
 .idea/
