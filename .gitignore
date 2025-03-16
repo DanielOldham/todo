@@ -27,3 +27,6 @@ bootstrap/
 
 # don't push django admin static files
 admin/
+
+# run uv pip freeze > requirements.txt to generate requirements for Fly Dockerfile
+requirements.txt
