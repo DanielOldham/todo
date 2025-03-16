@@ -21,3 +21,6 @@ wheels/
 # Fly will generate Dockerfile and .dockerignore if needed
 Dockerfile
 .dockerignore
+
+# can download bootstrap from source
+bootstrap/
