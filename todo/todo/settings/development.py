@@ -1,0 +1,1 @@
+from todo.settings.common import *
