@@ -1,0 +1,81 @@
+/* variables */
+:root {
+    --primary-beige: #FFF09E;
+    --primary-beige-dark: #DEC018;
+
+    --primary-green: #00513A;
+    --primary-green-dark: #002118;
+}
+
+
+/* body styles */
+body {
+    background-color: var(--primary-green);
+}
+
+
+/* nav styles */
+nav#main {
+    background-color: var(--primary-green-dark);
+    border-bottom: var(--primary-beige) solid 1px;
+}
+.navbar-brand {
+    color: var(--primary-beige);
+}
+.navbar-brand:hover {
+    color: var(--primary-beige) !important;
+}
+
+
+/* card styles */
+.card-header {
+    background-color: var(--primary-green-dark);
+    color: var(--primary-beige);
+}
+.card {
+    border-color: var(--primary-green);
+}
+
+
+/* text styles */
+.text-muted {
+    color: lightgray;
+}
+.primary-color {
+    color: var(--primary-green)
+}
+.primary-color-darker {
+    color: var(--primary-green-dark)
+}
+a.primary-color:hover {
+    color: var(--primary-green-dark)
+}
+
+
+/* button styles */
+.btn-primary {
+    background-color: var(--primary-green);
+    border-color: var(--primary-green);
+}
+.btn-primary:hover {
+    background-color: var(--primary-green-dark) !important;
+    border-color: var(--primary-green-dark) !important;
+}
+.btn-primary.show {
+    background-color: var(--primary-green-dark) !important;
+    border-color: var(--primary-green-dark) !important;
+}
+
+
+/* pagination styles */
+.page-link {
+    color: var(--primary-beige);
+}
+.page-item.active .page-link {
+    background-color: var(--primary-beige) !important;
+    color: white !important;
+    border-color: var(--primary-beige) !important;
+}
+.page-link:hover {
+    color: var(--primary-beige-dark) !important;
+}
