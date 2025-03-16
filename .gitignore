@@ -24,3 +24,6 @@ Dockerfile
 
 # can download bootstrap from source
 bootstrap/
+
+# don't push django admin static files
+admin/
