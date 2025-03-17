@@ -15,13 +15,12 @@ body {
 
 
 /* nav styles */
-nav#nav-top {
-    border-bottom: var(--primary-beige) solid 1px;
+nav {
+
     background-color: var(--primary-green-dark);
 }
-nav#nav-bottom {
-    border-top: var(--primary-beige) solid 1px;
-    background-color: var(--primary-green-dark);
+nav#nav-header {
+    border-bottom: var(--primary-beige) solid 1px;
 }
 .navbar-brand {
     color: var(--primary-beige);
@@ -29,7 +28,6 @@ nav#nav-bottom {
 .navbar-brand:hover {
     color: var(--primary-beige) !important;
 }
-
 
 /* card styles */
 .card-header {
