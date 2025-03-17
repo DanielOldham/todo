@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% block body %}
     <div class="row">
+
+        {# filter card #}
         <div class="col-3 offset-1 my-4">
             <div class="card">
                 <h3 class="card-header text-center">
@@ -44,7 +46,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-7 ml-8 my-4">
+
+        {# list card #}
+        <div class="col-7 my-4">
             <div class="card">
                 <h3 class="card-header text-center">
                     <span style="color: white !important;"></span>{{ request.user.first_name }}<span style="color: white !important;">'s To-do List</span>

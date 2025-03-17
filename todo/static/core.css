@@ -15,8 +15,11 @@ body {
 
 
 /* nav styles */
-nav#main {
+nav {
+
     background-color: var(--primary-green-dark);
+}
+nav#nav-header {
     border-bottom: var(--primary-beige) solid 1px;
 }
 .navbar-brand {
@@ -25,7 +28,6 @@ nav#main {
 .navbar-brand:hover {
     color: var(--primary-beige) !important;
 }
-
 
 /* card styles */
 .card-header {
