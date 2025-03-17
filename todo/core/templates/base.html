@@ -1,6 +1,6 @@
 {% extends 'base_header.html' %}
 {% block outer_body %}
-<nav class="navbar navbar-expand navbar-dark" id="main">
+<nav class="navbar navbar-expand navbar-dark bd-navbar fixed-top" id="nav-top">
     <div class="container-fluid">
         <div class="navbar-brand ps-3">
             <i class="bi bi-check2-square"></i>
@@ -33,7 +33,32 @@
     </div>
 </nav>
 
-{% block body %}
-{% endblock %}
+<div class="my-5" id="card-space">
+    {% block body %}
+    {% endblock %}
+</div>
+
+
+<nav class="navbar navbar-expand navbar-dark fixed-bottom" id="nav-bottom">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav ms-auto navbar-right">
+            <li class="nav-item">
+                <a class="nav-item nav-link" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+                    <i class="bi bi-youtube"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-item nav-link" href="#">
+                    <i class="bi bi-instagram"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-item nav-link" href="#">
+                    <i class="bi bi-facebook"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
 
 {% endblock %}

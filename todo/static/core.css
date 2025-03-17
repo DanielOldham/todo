@@ -15,9 +15,13 @@ body {
 
 
 /* nav styles */
-nav#main {
-    background-color: var(--primary-green-dark);
+nav#nav-top {
     border-bottom: var(--primary-beige) solid 1px;
+    background-color: var(--primary-green-dark);
+}
+nav#nav-bottom {
+    border-top: var(--primary-beige) solid 1px;
+    background-color: var(--primary-green-dark);
 }
 .navbar-brand {
     color: var(--primary-beige);
