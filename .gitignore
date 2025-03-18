@@ -30,3 +30,5 @@ admin/
 
 # run uv pip freeze > requirements.txt to generate requirements for Fly Dockerfile
 requirements.txt
+
+staticfiles/
