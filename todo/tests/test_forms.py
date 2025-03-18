@@ -27,6 +27,7 @@ class TestForms(TestCase):
             'password2': ['The two password fields didn’t match.'],
         })
 
+
     def test_valid_signup_form(self):
         """
         Test SignupForm validation with valid data.
@@ -40,6 +41,7 @@ class TestForms(TestCase):
         })
 
         self.assertTrue(form.is_valid())
+
 
     def test_invalid_login_form(self):
         """
@@ -56,6 +58,7 @@ class TestForms(TestCase):
             'username': ['This field is required.'],
             'password': ['This field is required.'],
         })
+
 
     def test_valid_login_form(self):
         """
@@ -83,6 +86,7 @@ class TestForms(TestCase):
         self.assertEqual(form.errors, {
             'title': ['This field is required.'],
         })
+
 
     def test_valid_todo_form(self):
         """

@@ -32,6 +32,7 @@ def login(request):
             # errors logging in
             return render(request, 'login.html', {'form': form})
 
+
 def signup(request):
     """
     Django view.
@@ -72,6 +73,7 @@ def logout_user(request):
     auth.logout(request)
     return redirect('core:login')
 
+
 @login_required
 def todo_list(request):
     """
@@ -94,7 +96,6 @@ def todo_list(request):
     keyword_input = request.GET.get('keyword')
     if keyword_input:
         todos = todos.filter(notes__icontains=keyword_input).union(todos.filter(title__icontains=keyword_input))
-
 
     context = {'todos': todos}
 

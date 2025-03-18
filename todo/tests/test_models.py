@@ -11,6 +11,7 @@ class TestModels(TestCase):
     def setUp(self):
         User.objects.create_user(username='test', password='password')
 
+
     def test_create_todo_model(self):
         user = User.objects.get(username='test')
         instance = Todo.objects.create(title="New To-do", user=user)
