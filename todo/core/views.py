@@ -14,7 +14,6 @@ def login(request):
     :param request: Django request
     :return: rendered login template if request is GET (or if there are errors), else returns redirect to to_do list view
     """
-
     if request.method == 'GET':
         form = LoginForm()
         return render(request, 'login.html', {'form': form})
@@ -32,6 +31,7 @@ def login(request):
             # errors logging in
             return render(request, 'login.html', {'form': form})
 
+
 def signup(request):
     """
     Django view.
@@ -40,7 +40,6 @@ def signup(request):
     :param request: Django request
     :return: rendered signup template if request is GET (or there are errors), else return redirect to dashboard view
     """
-
     if request.method == 'GET':
         form = SignupForm()
         return render(request, 'signup.html', {'form': form})
@@ -68,9 +67,9 @@ def logout_user(request):
     :param request: Django request
     :return: redirect to login page
     """
-
     auth.logout(request)
     return redirect('core:login')
+
 
 @login_required
 def todo_list(request):
@@ -79,6 +78,7 @@ def todo_list(request):
     Display the Todo List.
 
     :param request: Django request
+    :return: rendered todo_list template
     """
     todos = Todo.objects.filter(user=request.user)
     radio_input = request.GET.get('filter-options')
@@ -94,7 +94,6 @@ def todo_list(request):
     keyword_input = request.GET.get('keyword')
     if keyword_input:
         todos = todos.filter(notes__icontains=keyword_input).union(todos.filter(title__icontains=keyword_input))
-
 
     context = {'todos': todos}
 
@@ -119,7 +118,8 @@ def change_todo_status(request, todo_id):
     Swap the status of the given Todo object.
 
     :param request: Django request
-    :todo_id: id of the Todo to update
+    :param todo_id: id of the Todo to update
+    :return: redirect to list view
     """
 
     # error handling
@@ -145,6 +145,7 @@ def new_todo_form(request):
     Display new Todo form and handle creation of new Todo.
 
     :param request: Django request
+    :return: redirect to list view
     """
     if request.method == 'GET':
         context = {'form': TodoForm(), 'form_type': 'add'}
@@ -168,7 +169,8 @@ def edit_todo_form(request, todo_id):
     Display edit Todo form and handle editing of existing Todo objects.
 
     :param request: Django request
-    :todo_id: id of the Todo to update
+    :param todo_id: id of the Todo to update
+    :return: rendered todo_form template if permissions valid, otherwise redirects to list view
     """
     try:
         todo = Todo.objects.get(id=todo_id)
@@ -200,7 +202,8 @@ def delete_todo(request, todo_id):
     Delete a Todo object.
 
     :param request: Django request
-    :todo_id: id of the Todo to delete
+    :param todo_id: id of the Todo to delete
+    :return: redirect to list view
     """
 
     try:
