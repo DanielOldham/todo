@@ -1,114 +1,183 @@
 {% extends 'base.html' %}
+{% load partials %}
 {% block body %}
-    <div class="row">
+<div class="row">
+    {# filter card #}
+    <div class="col-3 offset-1 my-4">
+        <div class="card">
+            <h3 class="card-header text-center py-3">
+                Filter by
+            </h3>
 
-        {# filter card #}
-        <div class="col-3 offset-1 my-4">
-            <div class="card">
-                <h3 class="card-header text-center">
-                    Filter by
-                </h3>
-
-                <div class="card-body">
-                    <form action="" method="GET">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <div class="d-flex justify-content-center">
-                                    <input type="text" name="keyword" id="keyword" class="form-control" placeholder="keyword">
-                                    <label for="keyword" hidden>keyword</label>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="d-flex justify-content-center">
-                                    <input type="radio" class="btn-check" name="filter-options" value="all" id="all" autocomplete="off" checked>
-                                    <label class="btn" for="all">All</label>
-                                </div>
-                            </li>
-                            <li class="list-group-item justify-content-center">
-                                <div class="d-flex justify-content-center">
-                                    <input type="radio" class="btn-check" name="filter-options" value="pending" id="pending" autocomplete="off">
-                                    <label class="btn" for="pending">Pending</label>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="d-flex justify-content-center">
-                                    <input type="radio" class="btn-check" name="filter-options" value="completed" id="completed" autocomplete="off">
-                                    <label class="btn" for="completed">Completed</label>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="d-flex justify-content-center">
-                                    <input type="submit" class="btn btn-block btn-primary" value="Go">
-                                </div>
-                            </li>
-                        </ul>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        {# list card #}
-        <div class="col-7 my-4">
-            <div class="card">
-                <h3 class="card-header text-center">
-                    <span style="color: white !important;"></span>{{ request.user.first_name }}<span style="color: white !important;">'s To-do List</span>
-                </h3>
-
-                <div class="card-body">
-                    <ul class="list-group list-group-flush">
-                        {% if filter_text %}
-                        <li class="list-group-item text-muted fst-italic">
-                            filtered by {{ filter_text }}
-                        </li>
-                        {% endif %}
-                        {% for todo in todos %}
-                        <li class="list-group-item">
-                            <div class="row {% if todo.status == 'C' %} text-decoration-line-through{% endif %}">
-                                {# todo checkbox #}
-                                <div class="col-1">
-                                    <a href="{% url 'core:change_todo_status' todo.id %}">
-                                        {% if todo.status == 'C' %}
-                                        <i class="bi bi-check-square primary-color"></i>
-                                        {% else %}
-                                        <i class="bi bi-square primary-color"></i>
-                                        {% endif %}
-                                    </a>
-                                </div>
-
-                                {# todo title #}
-                                <div class="col-4 fw-bold text-truncate">
-                                    {{ todo.title }}
-                                </div>
-
-                                {# todo notes #}
-                                <div class="col-6 text-truncate fst-italic">
-                                    {{ todo.notes }}
-                                </div>
-
-                                {# edit todo button #}
-                                <div class="col-1">
-                                    <a href="{% url 'core:edit_todo_form' todo.id %}">
-                                        <i class="bi bi-pencil-square primary-color"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </li>
-                        {% endfor %}
-                        <li class="list-group-item">
-                            <div class="row">
-                                <div class="col-1">
-                                    <a href="{% url 'core:new_todo_form' %}">
-                                        <i class="bi bi-plus-square-fill primary-color"></i>
-                                    </a>
-                                </div>
-                                <div class="col-11 text-muted">
-                                    Add new To-do!
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+            <div class="card-body">
+                <ul data-signals-status
+                    class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-center">
+                            <input data-bind-keyword
+                                   data-on-input__debounce.250ms="@get('{% url "core:todo_list" %}')"
+                                   type="text" name="keyword" id="keyword" class="form-control" placeholder="keyword">
+                            <label for="keyword" hidden>keyword</label>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-center">
+                            <input data-on-click="$status='all'; @get('{% url "core:todo_list" %}')"
+                                   type="radio" class="btn-check" name="filter-options" value="all" id="all" autocomplete="off" checked>
+                            <label class="btn" for="all">All</label>
+                        </div>
+                    </li>
+                    <li class="list-group-item justify-content-center">
+                        <div class="d-flex justify-content-center">
+                            <input data-on-click="$status='pending'; @get('{% url "core:todo_list" %}')"
+                                   type="radio" class="btn-check" name="filter-options" value="pending" id="pending" autocomplete="off">
+                            <label class="btn" for="pending">Pending</label>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-center">
+                            <input data-on-click="$status='completed'; @get('{% url "core:todo_list" %}')"
+                                   type="radio" class="btn-check" name="filter-options" value="completed" id="completed" autocomplete="off">
+                            <label class="btn" for="completed">Completed</label>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
+
+    {# list card #}
+    <div class="col-7 my-4">
+
+        {% partialdef todo_list_card %}
+        <div class="card" id="todo_list_card">
+            <h3 class="card-header text-center py-3">
+                <span style="color: white !important;"></span>{{ request.user.first_name }}<span style="color: white !important;">'s To-do List</span>
+            </h3>
+
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                     <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-1">
+                                <a href="{% url 'core:new_todo_form' %}">
+                                    <i class="bi bi-plus-square-fill primary-color"></i>
+                                </a>
+                            </div>
+                            <div class="col-11 text-muted">
+                                Add new To-do!
+                            </div>
+                        </div>
+                    </li>
+                    {% for todo in todos %}
+                    <li class="list-group-item">
+                        <div class="row {% if todo.status == 'C' %} text-decoration-line-through{% endif %}">
+                            {# todo checkbox #}
+                            <div class="col-1">
+                                <a href="{% url 'core:change_todo_status' todo.id %}">
+                                    {% if todo.status == 'C' %}
+                                    <i class="bi bi-check-square primary-color"></i>
+                                    {% else %}
+                                    <i class="bi bi-square primary-color"></i>
+                                    {% endif %}
+                                </a>
+                            </div>
+
+                            {# todo title #}
+                            <div class="col-4 fw-bold text-truncate">
+                                {{ todo.title }}
+                            </div>
+
+                            {# todo notes #}
+                            <div class="col-6 text-truncate fst-italic">
+                                {{ todo.notes }}
+                            </div>
+
+                            {# edit todo button #}
+                            <div class="col-1">
+                                <a href="{% url 'core:edit_todo_form' todo.id %}">
+                                    <i class="bi bi-pencil-square primary-color"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="card-footer">
+                <div class="row align-items-center">
+                    {# spacer col (may include changeable page amount #}
+                    <div class="col">
+                    </div>
+
+                    {# pagination control col #}
+                    <div data-signals-page class="col">
+                        <ul class="pagination justify-content-center mt-2">
+                            {# first button and previous button #}
+                            {% if todos.has_previous %}
+                            <li class="page-item">
+                                <button data-on-click="$page='1'; @get('{% url "core:todo_list" %}')" class="page-link" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </button>
+                            </li>
+                            <li class="page-item">
+                                <button data-on-click="$page='{{ todos.previous_page_number }}'; @get('{% url "core:todo_list" %}')" class="page-link">
+                                    {{ todos.previous_page_number }}
+                                </button>
+                            </li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <button class="page-link">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </button>
+                            </li>
+                            {% endif %}
+
+                            {# current button #}
+                            <li class="page-item active"><a class="page-link">{{ todos.number }}</a></li>
+
+                            {# next button and last button #}
+                            {% if todos.has_next %}
+                            <li class="page-item">
+                                <button data-on-click="$page='{{ todos.next_page_number }}'; @get('{% url "core:todo_list" %}')" class="page-link">
+                                    {{ todos.next_page_number }}
+                                </button>
+                            </li>
+                            <li class="page-item">
+                                <button data-on-click="$page='{{ todos.paginator.num_pages }}'; @get('{% url "core:todo_list" %}')" class="page-link">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </button>
+                            </li>
+                            {% else %}
+                            <li class="page-item">
+                                <a class="page-link disabled">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+
+                    {# page details column #}
+                    <div class="col text-end">
+                        <span>
+                            Showing
+                        </span>
+                        <span class="fw-bold">
+                            {{ todos.start_index }} - {{ todos.end_index }}
+                        </span>
+                        <span>
+                            of
+                        </span>
+                        <span class="fw-bold">
+                            {{ todos.paginator.count }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endpartialdef %}
+        {% partial todo_list_card %}
+    </div>
+</div>
 {% endblock %}

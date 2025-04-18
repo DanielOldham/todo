@@ -71,13 +71,13 @@ a.primary-color:hover {
 
 /* pagination styles */
 .page-link {
-    color: var(--primary-beige);
+    color: var(--primary-green);
 }
 .page-item.active .page-link {
-    background-color: var(--primary-beige) !important;
+    background-color: var(--primary-green) !important;
     color: white !important;
-    border-color: var(--primary-beige) !important;
+    border-color: var(--primary-green) !important;
 }
 .page-link:hover {
-    color: var(--primary-beige-dark) !important;
+    color: var(--primary-green-dark) !important;
 }

@@ -1,5 +1,10 @@
+import json
+
+from datastar_py.sse import ServerSentEventGenerator
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
+from django.core.paginator import Paginator
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .forms import SignupForm, LoginForm, TodoForm
 from django.contrib import auth
@@ -59,6 +64,7 @@ def signup(request):
             return render(request, 'signup.html', {'form': form})
 
 
+@login_required
 def logout_user(request):
     """
     Django view.
@@ -80,34 +86,52 @@ def todo_list(request):
     :param request: Django request
     :return: rendered todo_list template
     """
-    todos = Todo.objects.filter(user=request.user)
-    radio_input = request.GET.get('filter-options')
+    todos = Todo.objects.filter(user=request.user).order_by('title')
 
-    # if radio_input, filter by pending or completed todos
-    if radio_input:
-        if radio_input == 'pending':
+    page = 1
+    keyword_input = ""
+    status_input = ""
+    try:
+        qdict = json.loads(request.GET.get("datastar", "{}"))
+        page = int(qdict.get("page", 1)) if qdict.get("page") else 1
+        keyword_input = qdict.get("keyword", "")
+        status_input = qdict.get("status", "")
+    except TypeError:
+        pass
+
+    # if there is todo status input, filter by pending or completed todos
+    if status_input:
+        if status_input == 'pending':
             todos = todos.filter(status='P')
-        elif radio_input == 'completed':
+        elif status_input == 'completed':
             todos = todos.filter(status='C')
 
-    # if there is keyword input, search for
-    keyword_input = request.GET.get('keyword')
+    # if there is keyword input, search for keyword in title and notes
     if keyword_input:
         todos = todos.filter(notes__icontains=keyword_input).union(todos.filter(title__icontains=keyword_input))
 
-    context = {'todos': todos}
+    # pagination
+    paginator = Paginator(todos, 10)
+    todo_paginator = paginator.get_page(page)
+    context = {'todos': todo_paginator}
 
-    # create a filter message to display to the user
-    filter_text = ''
-    if radio_input != 'all' and keyword_input:
-        filter_text = radio_input + ', \"' + keyword_input + '\"'
-    elif radio_input != 'all':
-        filter_text = radio_input
-    elif keyword_input:
-        filter_text = '\"' + keyword_input + '\"'
+    # return datastar requests as server sent events
+    if "datastar" in request.GET:
+        # render only list template partial
+        html_response = render(
+            request, "todo_list.html#todo_list_card", context=context
+        )
 
-    context['filter_text'] = filter_text
+        # merge rendered template partial with the rest of the template
+        sse_response = ServerSentEventGenerator.merge_fragments(
+            html_response.content.decode("utf-8").splitlines()
+        )
+        response = HttpResponse(sse_response)
+        response["Content-Type"] = "text/event-stream"
+        response["Cache-Control"] = "no-cache"
+        return response
 
+    # not a datastar request, return regular render
     return render(request, 'todo_list.html', context=context)
 
 
