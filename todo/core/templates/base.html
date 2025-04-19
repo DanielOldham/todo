@@ -6,30 +6,39 @@
             <i class="bi bi-check2-square"></i>
             To-do
         </div>
-        {% if request.user.is_authenticated %}
         <ul class="navbar-nav me-auto">
+            {% if request.user.is_authenticated %}
             <li>
                 <a class="nav-item nav-link" href="{% url 'core:todo_list' %}">
                     <i class="bi bi-card-checklist"></i>
                     List
                 </a>
             </li>
+            {% endif %}
             <li>
-                <a class="nav-item nav-link" href="#">
-                    <i class="bi bi-person-square"></i>
-                    Profile
+                <a class="nav-item nav-link" href="{% url 'core:about' %}">
+                    <i class="bi bi-info-square"></i>
+                    About
                 </a>
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
+            {% if request.user.is_authenticated %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'core:logout' %}">
                     Log out
                     <i class="bi bi-box-arrow-right"></i>
                 </a>
             </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'core:login' %}">
+                    Log in
+                    <i class="bi bi-door-open"></i>
+                </a>
+            </li>
+            {% endif %}
         </ul>
-        {% endif %}
     </div>
 </nav>
 
@@ -42,18 +51,18 @@
     <div class="container-fluid">
         <ul class="nav navbar-nav ms-auto navbar-right">
             <li class="nav-item">
-                <a class="nav-item nav-link" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+                <a class="nav-item nav-link" href="https://github.com/DanielOldham/todo" target="_blank">
+                    <i class="bi bi-github"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-item nav-link" href="www.linkedin.com/in/daniel-r-oldham">
+                    <i class="bi bi-linkedin"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-item nav-link" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">
                     <i class="bi bi-youtube"></i>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-item nav-link" href="#">
-                    <i class="bi bi-instagram"></i>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-item nav-link" href="#">
-                    <i class="bi bi-facebook"></i>
                 </a>
             </li>
         </ul>
