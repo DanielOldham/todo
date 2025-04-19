@@ -1,8 +1,6 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
-
-from core.forms import TodoForm
 from core.models import Todo
 
 

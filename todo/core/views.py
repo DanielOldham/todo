@@ -1,5 +1,4 @@
 import json
-
 from datastar_py.sse import ServerSentEventGenerator
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
@@ -75,6 +74,10 @@ def logout_user(request):
     """
     auth.logout(request)
     return redirect('core:login')
+
+
+def about(request):
+    return render(request, 'about.html')
 
 
 @login_required
